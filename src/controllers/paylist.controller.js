@@ -58,9 +58,7 @@ const getUserPlaylists = asyncHandler(async(req,res)=>{
     ])
     console.log("aggregate User:-",user);
 
-    // const user = await Playlist.find({
-    //   owner:userId
-    // })
+    
     
 
     return res
