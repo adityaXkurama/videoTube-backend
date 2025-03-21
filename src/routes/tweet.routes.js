@@ -12,8 +12,9 @@ import {
  router.use(verifyJWT)
 
 
+ 
  router.route('/')
- .post(createTweet)
+ .post(createTweet) 
  router.route('/users/:userId').get(getUserTweets)
  
  router.route('/:tweetId')
@@ -21,5 +22,5 @@ import {
  .delete(deleteTweet)
 
 
-
- export default router
+ 
+ export default router 
