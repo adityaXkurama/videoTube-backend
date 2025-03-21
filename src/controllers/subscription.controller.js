@@ -1,9 +1,10 @@
-import { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 import {Subscription} from "../models/subscription.models.js"
+import { User } from "../models/user.models.js";
 
 const toggleSubscription = asyncHandler(async(req,res)=>{
     const {channelId}= req.params
@@ -49,11 +50,13 @@ const toggleSubscription = asyncHandler(async(req,res)=>{
 
 const getUserChannelSubscribers = asyncHandler(async(req,res)=>{
     const {channelId} = req.params
+    console.log("Channel id for subscription",channelId);
+    
 
     const subscribers = await Subscription.aggregate([
         {
             $match:{
-                channel:channelId
+                channel:new mongoose.Types.ObjectId(channelId)
             }
         },
         {
@@ -87,24 +90,24 @@ const getUserChannelSubscribers = asyncHandler(async(req,res)=>{
     .json(new ApiResponse(
         200,
         {
-            subscribers:subscribers.subscribers,
-            numOfSubscribers:subscribers.subscribers.length()
+            subscribers:subscribers,
+            numOfSubscribers:subscribers.length
         },
         "channel subscriber fetched"
     ))
 })
 
 const getSubscribedChannels = asyncHandler(async (req, res) => {
-    const { subscriberId } = req.params;
+    const { channelId } = req.params;
   
-    if (!isValidObjectId(subscriberId)) {
+    if (!isValidObjectId(channelId)) {
       throw new ApiError(400, "Subscriber does not exist");
     }
   
-    const subscriber = await Subscription.aggregate([
+    const subscriber = await User.aggregate([
       {
         $match: {
-          _id: new mongoose.Types.ObjectId(subscriberId),
+          _id: new mongoose.Types.ObjectId(channelId),
         },
       },
       {
@@ -126,7 +129,7 @@ const getSubscribedChannels = asyncHandler(async (req, res) => {
       .json(
         new ApiResponse(
           200,
-          subscriber[0].channelsSubscribedTo,
+          subscriber[0].channelsSubscribedTo.length,
           "Successfully fetched the number of channels user is subscribed to"
         )
       );
