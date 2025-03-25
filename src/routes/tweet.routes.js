@@ -16,7 +16,7 @@ import {
  router.route('/')
  .post(createTweet) 
  router.route('/users/:userId').get(getUserTweets)
- 
+  
  router.route('/:tweetId')
  .patch(updateTweet)
  .delete(deleteTweet)

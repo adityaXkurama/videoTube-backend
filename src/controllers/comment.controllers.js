@@ -42,8 +42,8 @@ const getVideoComments = asyncHandler(async(req,res)=>{
     new ApiResponse(200,comments,"comments fetched for the video")
   )
 
-})
-
+}) 
+ 
 const addComment = asyncHandler(async(req,res)=>{
   const {videoId} = req.params
   const userId=req.user._id
@@ -78,8 +78,8 @@ const addComment = asyncHandler(async(req,res)=>{
     new ApiResponse(200,createdComment,"Comment created successfully")
   )
 
-})
-
+}) 
+ 
 const updateComment = asyncHandler(async(req,res)=>{
   const {commentId}=req.params
   const {newContent}=req.body
@@ -109,8 +109,8 @@ const updateComment = asyncHandler(async(req,res)=>{
   .json(200,updatedComment,"Comment updated successfully")
 
 
-})
-
+}) 
+  
 
 const deleteComment = asyncHandler(async(req,res)=>{
   const {commentId}= req.params
@@ -133,7 +133,7 @@ const deleteComment = asyncHandler(async(req,res)=>{
     .json(new ApiResponse(200, response, "Comment Deleted SuccessFully"));
 
 
-})
+}) 
 
 export {
   getVideoComments,
