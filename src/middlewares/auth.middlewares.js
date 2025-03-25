@@ -16,16 +16,16 @@ export const verifyJWT = asyncHandler(async (req,_,next)=>{
 
         const user = await User.findById(decodedToken?._id).select("-password -refreshtoken")
         if(!user){
-            throw new ApiError(401,"Unauthorized")
+            throw new ApiError(401,"Unauthorized") 
         }
-            req.user=user
-            console.log("req.user of the user consoled",req.user._id);
-            
-            next()
-        
+            req.user=user 
+            console.log("req.user of the user consoled",req.user._id); 
+             
+            next()  
+         
     } catch (error) {
         throw new ApiError(401,error?.message||"UnauthorizedInvalid access token")
         
     }
-
+  
 })
