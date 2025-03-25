@@ -158,23 +158,23 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
 
   const getLikedVideos = asyncHandler(async (req, res) => {
     //TODO: get all liked videos
-  
+   
     const videos = await Like.find({
-      likedBy: req.user._id,
+      likedBy: req.user._id, 
       video: { $exists: true },
     });
   
     if (!videos) {
-      throw new ApiError(400, "No Liked videos found");
+      throw new ApiError(400, "No Liked videos found"); 
     }
-  
-    return res
-      .status(200)
+   
+    return res 
+      .status(200) 
       .json(
-        new ApiResponse(
-          200,
+        new ApiResponse( 
+          200, 
           { numOfVideos: videos.length, videos },
           "Liked videos Fetched Successfully"
-        )
-      );
+        ) 
+      ); 
   });
